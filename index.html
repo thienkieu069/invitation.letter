@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Date Invitation</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <script>
+        if (localStorage.getItem("dateInviteUnlocked") !== "true") {
+            window.location.href = "login.html";
+        }
+    </script>
+</head>
+
+<body>
+   
+    <div class="invite-card">
+        
+        <div class="top-label">A little birthday date for my love</div>
+
+        <h1>DATE INVITATION</h1>
+
+        <p class="subtitle">
+            Gửi yêu dấu của em — nhân ngày sinh nhật của anh ♡
+        </p>
+
+        <div class="photo-box">
+            <img src="anhlove.jpg" alt="Chamie Steak">
+            <span>Happy Birthday, My love</span>
+        </div>
+
+        <div class="message justify-text">
+            Yêu dấu của em oiiii, hôm nay anh không cần phải lên plan hay suy nghĩ gì hết.
+            Việc của anh là <strong>ngủ đủ giấc</strong>, ăn mặc thật đẹp zai,
+            có mặt rước em đúng giờ và để em dẫn anh vào một buổi tối thật lãng mạn, nơi chỉ có hai ta.
+            <br><br>
+            Em đã chuẩn bị một bữa đi chơi nho nhỏ dành riêng cho hai đứa mình.
+            Em mong hôm nay anh sẽ thật vui và có một ngày sinh nhật<strong> đáng nhớ. </strong>
+            Mong rằng qua buổi sinh nhật này,
+            anh sẽ cảm nhận được rằng anh luôn là người đặc biệt nhất trong lòng em.
+
+        </div>
+
+        <h2 class="section-title">Lịch trình của chúng mình</h2>
+
+        <div class="timeline">
+            <div class="time-item">
+                <div class="time">17:00</div>
+                <div class="time-content">
+                    Anh có mặt tại nhà em để rước em đi.
+                    Yêu nhớ đi đúng giờ nha, công chúa nhỏ sẽ đợi hoàng tử tới đó!!!
+                </div>
+            </div>
+
+            <div class="time-item">
+                <div class="time">17:30</div>
+                <div class="time-content">
+                    Ghé photobooth chụp vài tấm kỷ niệm thật xinh.
+                </div>
+            </div>
+
+            <div class="time-item">
+                <div class="time">18:30</div>
+                <div class="time-content">
+                    Dùng bữa tối cùng em và mong anh sẽ thích nó.
+                </div>
+            </div>
+
+            <div class="time-item">
+                <div class="time">22:00</div>
+                <div class="time-content">
+                    <strong>SECRET!!!</strong>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="dress-code">
+            <p>Dress code</p>
+
+            <div class="colors">
+                <div class="color-item">
+                    <div class="circle white"></div>
+                    Trắng
+                </div>
+
+                <div class="color-item">
+                    <div class="circle beige"></div>
+                    Be
+                </div>
+
+                <div class="color-item">
+                    <div class="circle cream"></div>
+                    Kem
+                </div>
+
+                <div class="color-item">
+                    <div class="circle pastel-pink"></div>
+                    Hồng pastel
+                </div>
+            </div>
+            <p>
+                Gợi ý nhỏ: sơ mi trông đệp zai hơn kaka
+            </p>
+        </div>
+
+        <div class="note">
+            Yêu cầu đặc biệt dành cho yêu:
+            <br>
+            <strong>Ngủ đủ giấc, đi đúng giờ, điện thoại sạc đầy pin,
+                chuẩn bị tâm lý thật thoải mái
+                và chỉ cần tận hưởng buổi tối đặc biệt này cùng tớ thui.</strong>
+        </div>
+
+
+        <div class="button-area">
+            <button class="cute-btn decode-btn" onclick="openDecodeGame()">
+                Giải mã H P B D ✿
+            </button>
+        </div>
+        <div class="button-area">
+            <button class="cute-btn" onclick="openSecretLetter()">
+                Bức thư bí mật ♡
+            </button>
+        </div>
+        <div class="letter-lock-box" id="letterLockBox">
+    <p class="letter-lock-title">Oy thoi chít sao nại mở thư sốm thía huhu</p>
+    <p class="letter-lock-text">
+        Bức thư này chỉ được mở sau <strong>23:00</strong> thôi nhá.
+        Đây là bí mật cuối cùng của ngày hôm nay đó, nên iu phải tận hưởng hêt ngày hôm nay cùng với tớ cái đã nhía hihi ♡
+    </p>
+</div>
+        
+        <button class="lock-btn" onclick="lockInvite()">
+            Đóng thiệp lại
+        </button>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Secret Password</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Quicksand:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Quicksand', sans-serif;
+      background:
+        radial-gradient(circle at top left, #ffe3ec, transparent 34%),
+        radial-gradient(circle at bottom right, #eeb7c8, transparent 36%),
+        linear-gradient(135deg, #fff8fa, #f7d4df, #fff4f7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      color: #6f3042;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 440px;
+      background: rgba(255, 250, 250, 0.94);
+      border: 1.5px solid rgba(190, 112, 132, 0.35);
+      border-radius: 34px;
+      padding: 34px 28px;
+      text-align: center;
+      box-shadow:
+        0 28px 70px rgba(150, 78, 96, 0.25),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.75);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: "♡";
+      position: absolute;
+      top: -42px;
+      right: 18px;
+      font-size: 120px;
+      color: rgba(188, 92, 116, 0.12);
+      transform: rotate(15deg);
+    }
+
+    .label {
+      color: #b65f78;
+      font-size: 13px;
+      letter-spacing: 2.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      line-height: 1.05;
+      color: #7b3345;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .desc {
+      color: #9b5a68;
+      font-weight: 600;
+      line-height: 1.7;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .password-input {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 999px;
+      border: 1.5px solid #d69aaa;
+      outline: none;
+      background: #fff8fa;
+      color: #7b3345;
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 16px;
+      font-family: 'Quicksand', sans-serif;
+      position: relative;
+      z-index: 2;
+    }
+
+    .password-input::placeholder {
+      color: #c78a9b;
+      font-weight: 700;
+    }
+
+    .open-btn {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 16px 22px;
+      background: linear-gradient(135deg, #d98ca1, #9f425b);
+      color: white;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 14px 28px rgba(154, 68, 88, 0.32);
+      transition: 0.25s;
+      position: relative;
+      z-index: 2;
+    }
+
+    .open-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 36px rgba(154, 68, 88, 0.4);
+    }
+
+    .error {
+      display: none;
+      margin-top: 16px;
+      color: #b85670;
+      font-weight: 800;
+      line-height: 1.5;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hint {
+      margin-top: 20px;
+      font-size: 13px;
+      color: #b87989;
+      font-weight: 700;
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 30px 22px;
+        border-radius: 28px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .desc {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-card">
+    <div class="label">Thư mời bí mật</div>
+
+    <h1>Love Code ♡</h1>
+
+    <p class="desc">
+      Gửi Nguyễn Thái Hiển - anh bé yêu siu cấp dễ thương<br>
+      Anh có một cuộc hẹn bí mật ngày hôm nay vui lòng nhập pass để được bật mí!
+    </p>
+
+    <input 
+      type="password" 
+      id="passwordInput" 
+      class="password-input"
+      placeholder="Nhập mật khẩu ở đây"
+      onkeydown="handleEnter(event)"
+    >
+
+    <button class="open-btn" onclick="checkPassword()">
+      Mở thiệp ♡
+    </button>
+    
+
+    <div class="error" id="errorText">
+      Error sai bét ròi, vui lòng nhập lại hahaha ♡
+    </div>
+
+    <div class="hint">
+      Gợi ý nhỏ: pass là một ngày đặc biệt của tụi mình.
+    </div>  
+   
+  </div>
+
+
+  <script>
+    const correctPassword = "290126";
+
+    function checkPassword() {
+      const input = document.getElementById("passwordInput");
+      const errorText = document.getElementById("errorText");
+
+      if (input.value === correctPassword) {
+        localStorage.setItem("dateInviteUnlocked", "true");
+        window.location.href = "index.html";
+      } else {
+        errorText.style.display = "block";
+        input.value = "";
+        input.focus();
+      }
+    }
+
+    function handleEnter(event) {
+      if (event.key === "Enter") {
+        checkPassword();
+      }
+    }
+  </script>
+</body>
+</html>

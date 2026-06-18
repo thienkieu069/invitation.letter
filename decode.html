@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giải mã H P B D</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Quicksand:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <script>
+        if (localStorage.getItem("dateInviteUnlocked") !== "true") {
+            window.location.href = "login.html";
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+            color: #5b2d38;
+            padding: 34px 16px;
+            background:
+                radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.9) 0 2px, transparent 3px),
+                radial-gradient(circle at 78% 25%, rgba(255, 255, 255, 0.75) 0 2px, transparent 3px),
+                linear-gradient(135deg, #fff7fa 0%, #f8dce6 42%, #f2c8d8 100%);
+            background-size: 90px 90px, 120px 120px, cover;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.38;
+            background-image:
+                radial-gradient(circle, #c87893 0 2px, transparent 2.5px),
+                radial-gradient(circle, #fffafa 0 4px, transparent 4.5px),
+                radial-gradient(circle, #b85d78 0 1.6px, transparent 2.1px),
+                radial-gradient(circle, #fff3e8 0 3.5px, transparent 4px);
+            background-size:
+                86px 86px,
+                86px 86px,
+                118px 118px,
+                118px 118px;
+            background-position:
+                10px 14px,
+                16px 20px,
+                54px 48px,
+                60px 54px;
+        }
+
+        .decode-wrapper {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #8a3a50;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(200, 111, 138, 0.25);
+            padding: 12px 18px;
+            border-radius: 999px;
+            font-weight: 800;
+            margin-bottom: 22px;
+            box-shadow: 0 10px 22px rgba(150, 70, 95, 0.12);
+        }
+
+        .decode-card-main {
+            background:
+                linear-gradient(rgba(255, 252, 252, 0.94), rgba(255, 246, 249, 0.94)),
+                repeating-linear-gradient(45deg,
+                    rgba(255, 255, 255, 0.35) 0 8px,
+                    rgba(255, 225, 235, 0.22) 8px 16px);
+            border: 1.5px solid rgba(185, 95, 120, 0.24);
+            border-radius: 44px;
+            padding: 46px;
+            box-shadow:
+                0 28px 80px rgba(140, 65, 88, 0.23),
+                0 0 0 12px rgba(255, 255, 255, 0.42),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.85);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .decode-card-main::before {
+            content: "";
+            position: absolute;
+            inset: 18px;
+            border-radius: 32px;
+            border: 2px dashed rgba(255, 255, 255, 0.95);
+            pointer-events: none;
+        }
+
+        .decode-card-main::after {
+            content: "✿";
+            position: absolute;
+            top: 28px;
+            right: 38px;
+            font-size: 90px;
+            color: rgba(184, 93, 120, 0.16);
+            transform: rotate(14deg);
+            pointer-events: none;
+        }
+
+        .decode-card-main>* {
+            position: relative;
+            z-index: 2;
+        }
+
+        .label {
+            text-align: center;
+            color: #b95f78;
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            color: #7b3345;
+            font-size: 52px;
+            line-height: 1.05;
+            margin-bottom: 14px;
+            text-shadow:
+                0 2px 0 rgba(255, 255, 255, 0.9),
+                0 12px 28px rgba(130, 60, 78, 0.16);
+        }
+
+        .intro {
+            text-align: center;
+            color: #70404b;
+            font-size: 17px;
+            line-height: 1.75;
+            font-weight: 650;
+            max-width: 680px;
+            margin: 0 auto 30px;
+        }
+
+        .decode-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin: 28px 0;
+        }
+
+        .letter-btn {
+            border: none;
+            min-height: 138px;
+            border-radius: 30px;
+            cursor: pointer;
+            background:
+                linear-gradient(145deg, #fffdfd, #ffe8f0);
+            border: 1.5px solid rgba(200, 111, 138, 0.25);
+            box-shadow:
+                0 14px 28px rgba(154, 68, 88, 0.15),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.82);
+            color: #8a3a50;
+            transition: 0.25s;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .letter-btn:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 20px 38px rgba(154, 68, 88, 0.24),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+        }
+
+        .letter-btn span {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 58px;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .letter-btn small {
+            font-size: 12px;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            font-weight: 900;
+            color: #b95f78;
+        }
+
+        .letter-btn.unlocked {
+            background:
+                linear-gradient(145deg, #f8c7d5, #fff7fa);
+            border-color: rgba(184, 93, 120, 0.48);
+        }
+
+        .result-box {
+            background:
+                linear-gradient(135deg, #7b3345, #934158, #6f2c3d);
+            color: #fff8f8;
+            border-radius: 34px;
+            padding: 28px 30px;
+            text-align: center;
+            box-shadow:
+                0 18px 42px rgba(123, 51, 69, 0.26),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+            min-height: 145px;
+        }
+
+        .result-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            color: #ffe3ea;
+            margin-bottom: 12px;
+        }
+
+        .result-text {
+            font-size: 17px;
+            line-height: 1.8;
+            font-weight: 650;
+        }
+
+        .time-note {
+            margin-top: 16px;
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffe3ea;
+            font-weight: 900;
+        }
+
+        .reset-btn {
+            margin: 26px auto 0;
+            display: block;
+            border: none;
+            background: transparent;
+            color: #b85670;
+            font-weight: 900;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 18px 10px;
+            }
+
+            .back-btn {
+                font-size: 13px;
+                padding: 10px 14px;
+                margin-bottom: 16px;
+            }
+
+            .decode-card-main {
+                padding: 32px 20px;
+                border-radius: 30px;
+                box-shadow:
+                    0 18px 45px rgba(140, 65, 88, 0.18),
+                    0 0 0 6px rgba(255, 255, 255, 0.36),
+                    inset 0 0 0 1px rgba(255, 255, 255, 0.85);
+            }
+
+            .decode-card-main::before {
+                inset: 10px;
+                border-radius: 22px;
+            }
+
+            .decode-card-main::after {
+                font-size: 54px;
+                top: 20px;
+                right: 22px;
+            }
+
+            .label {
+                font-size: 10.5px;
+                letter-spacing: 2px;
+            }
+
+            h1 {
+                font-size: 34px;
+                line-height: 1.1;
+            }
+
+            .intro {
+                font-size: 14.5px;
+                line-height: 1.7;
+                margin-bottom: 24px;
+            }
+
+            .decode-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                margin: 24px 0;
+            }
+
+            .letter-btn {
+                min-height: 112px;
+                border-radius: 22px;
+            }
+
+            .letter-btn span {
+                font-size: 44px;
+            }
+
+            .letter-btn small {
+                font-size: 10px;
+            }
+
+            .result-box {
+                padding: 22px 18px;
+                border-radius: 26px;
+                min-height: 130px;
+            }
+
+            .result-title {
+                font-size: 23px;
+            }
+
+            .result-text {
+                font-size: 14.8px;
+                line-height: 1.75;
+            }
+
+            .time-note {
+                font-size: 13px;
+                padding: 9px 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="decode-wrapper">
+        <a href="index.html" class="back-btn">← Quay lại thiệp mời</a>
+
+        <main class="decode-card-main">
+            <div class="label">Birthday secret code</div>
+
+            <h1>Giải mã H P B D</h1>
+
+            <p class="intro">
+                Như em đã nói thì em đã chuẩn bị 4 thứ tương ứng với 4 chữ cái HPBD ♡
+                Vậy ý nghĩa của từng chữ là gì nhể? Hãy cũng nhau bật mí nhóa hehe
+            </p>
+
+            <div class="decode-grid">
+                <button class="letter-btn" data-letter="H" onclick="decodeGift('H')">
+                    <span>H</span>
+                    <small>unlock me</small>
+                </button>
+
+                <button class="letter-btn" data-letter="P" onclick="decodeGift('P')">
+                    <span>P</span>
+                    <small>unlock me</small>
+                </button>
+
+                <button class="letter-btn" data-letter="B" onclick="decodeGift('B')">
+                    <span>B</span>
+                    <small>unlock me</small>
+                </button>
+
+                <button class="letter-btn" data-letter="D" onclick="decodeGift('D')">
+                    <span>D</span>
+                    <small>unlock me</small>
+                </button>
+            </div>
+
+            <div class="result-box" id="resultBox">
+                <p class="result-title" id="resultTitle">Chọn một chữ cái để giải mã nha ♡</p>
+                <p class="result-text" id="resultText">
+                    Chắc là anh sẽ bất ngờ lắm đấy 
+                </p>
+            </div>
+
+            <button class="reset-btn" onclick="lockInvite()">Đóng thiệp lại</button>
+        </main>
+    </div>
+    <script>
+        const giftData = {
+            H: {
+                name: "H là Home",
+                shortName: "Home",
+                unlockHour: 22,
+                unlockMinute: 0,
+                hasTimeLock: true,
+                lockedMessage: "Chữ H còn mãi chơi chưa chịu về đâu. Anh yêu phải đợi ròi hihi ♡",
+                meaning: "H là Home — là nơi mình cùng nhau kết thúc một ngày sinh nhật thật nhẹ nhàng, em mong chúng mình có thể thư giãn bên nhau đến hết ngày."
+            },
+
+            P: {
+                name: "P là Projector",
+                shortName: "Projector",
+                unlockHour: 22,
+                unlockMinute: 30,
+                hasTimeLock: true,
+                lockedMessage: "Anh yêu ráng đợi xí nữa nhá, chắc là P đi chơi chung với H ấy mà ♡",
+                meaning: "P là Projector — em nghe ảnh bảo thích xem tv thích xem phim nên em mong món quà nhỏ này có thể mang đến cho anh một trải nghiệm phim ảnh tại nhà. Em mong rằng anh sẽ thích nó"
+            },
+
+            B: {
+                name: "B là Birthday Cake",
+                shortName: "Birthday Cake",
+                unlockHour: 19,
+                unlockMinute: 0,
+                hasTimeLock: true,
+                lockedMessage: "Hic Hic yêu của em nóng vội quá làm chữ chạy mất tiêu hết rùi, hong biết chữ B đi đâu ấy nhờ ♡",
+                meaning: "B là Birthday Cake — sao lại thiếu bánh kem trong ngày sinh nhật được nhờ "
+            },
+
+            D: {
+                name: "D là Diary",
+                shortName: "Diary",
+                hasTimeLock: false,
+                meaning: "D là Diary — đây chính là bức thư bí mật em dành cho anh hehe ♡ Là nơi em gửi những lời dịu dàng nhất, những điều em muốn anh đọc thật chậm và giữ lại cho riêng mình."
+            }
+        };
+        function decodeGift(letter) {
+            const now = new Date();
+            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+            const gift = giftData[letter];
+
+            const resultTitle = document.getElementById("resultTitle");
+            const resultText = document.getElementById("resultText");
+
+            if (!gift.hasTimeLock) {
+                showUnlockedGift(letter, gift);
+                return;
+            }
+
+            const unlockMinutes = gift.unlockHour * 60 + gift.unlockMinute;
+
+            if (currentMinutes >= unlockMinutes) {
+                showUnlockedGift(letter, gift);
+            } else {
+                const timeText = formatUnlockTime(gift.unlockHour, gift.unlockMinute);
+
+                resultTitle.innerHTML = "Ôy không chữ " + letter + " chạy mất tiêu rồi";
+                resultText.innerHTML =
+                    gift.lockedMessage +
+                    '<br><span class="time-note">Thời gian mở khóa: ' + timeText + '</span>';
+            }
+        }
+
+        function showUnlockedGift(letter, gift) {
+            const resultTitle = document.getElementById("resultTitle");
+            const resultText = document.getElementById("resultText");
+
+            resultTitle.innerHTML = gift.name + " ♡";
+            resultText.innerHTML = gift.meaning;
+
+            const button = document.querySelector('.letter-btn[data-letter="' + letter + '"]');
+
+            if (button) {
+                button.classList.add("unlocked");
+
+                const smallText = button.querySelector("small");
+                smallText.innerHTML = gift.shortName;
+            }
+        }
+        function formatUnlockTime(hour, minute) {
+            const h = hour.toString().padStart(2, "0");
+            const m = minute.toString().padStart(2, "0");
+
+            return h + ":" + m;
+        }
+
+        function lockInvite() {
+            localStorage.removeItem("dateInviteUnlocked");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+
+</html>
