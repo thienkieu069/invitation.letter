@@ -927,3 +927,205 @@ h1 {
         line-height: 1.7;
     }
 }
+.loading-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    background:
+        radial-gradient(circle at top left, #ffe3ec, transparent 35%),
+        radial-gradient(circle at bottom right, #eeb7c8, transparent 35%),
+        linear-gradient(135deg, #fff8fa, #f7d4df, #fff4f7);
+}
+
+.loading-box {
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    background: rgba(255, 250, 250, 0.94);
+    border: 1.5px solid rgba(190, 112, 132, 0.35);
+    border-radius: 34px;
+    padding: 36px 28px;
+    box-shadow: 0 28px 70px rgba(150, 78, 96, 0.25);
+}
+
+.loading-heart {
+    font-size: 58px;
+    color: #b85670;
+    animation: heartbeat 1.2s infinite;
+}
+
+.loading-box h2 {
+    font-family: 'Playfair Display', serif;
+    color: #7b3345;
+    font-size: 30px;
+    margin: 10px 0;
+}
+
+.loading-box p {
+    color: #9b5a68;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.loading-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 22px;
+}
+
+.loading-dots span {
+    width: 10px;
+    height: 10px;
+    background: #c86f8a;
+    border-radius: 50%;
+    animation: dot 1s infinite alternate;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.18);
+    }
+}
+
+@keyframes dot {
+    from {
+        opacity: 0.35;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-8px);
+    }
+}
+.letter-loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(255, 80, 120, 0.35), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(110, 0, 30, 0.45), transparent 36%),
+    linear-gradient(135deg, #100308, #2a0712, #4b0b1c, #120308);
+}
+
+.letter-loading-box {
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+  padding: 38px 30px;
+  border-radius: 34px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.035)),
+    linear-gradient(135deg, rgba(105, 0, 25, 0.75), rgba(10, 3, 6, 0.92));
+  border: 1.5px solid rgba(255, 205, 215, 0.28);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    0 0 45px rgba(190, 20, 55, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.letter-loading-heart {
+  font-family: 'Playfair Display', serif;
+  font-size: 64px;
+  color: #ffd7df;
+  text-shadow:
+    0 0 18px rgba(255, 90, 130, 0.55),
+    0 0 34px rgba(255, 160, 185, 0.25);
+  animation: rubyHeartbeat 1.15s infinite;
+}
+
+.letter-loading-box h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 31px;
+  line-height: 1.18;
+  color: #fff4f5;
+  margin: 10px 0 12px;
+}
+
+.letter-loading-box p {
+  color: #ffc2cf;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.letter-loading-dots {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 24px;
+}
+
+.letter-loading-dots span {
+  width: 10px;
+  height: 10px;
+  background: #ff9caf;
+  border-radius: 50%;
+  box-shadow: 0 0 16px rgba(255, 120, 155, 0.55);
+  animation: rubyDot 1s infinite alternate;
+}
+
+.letter-loading-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.letter-loading-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes rubyHeartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.18);
+  }
+}
+
+@keyframes rubyDot {
+  from {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-9px);
+  }
+}
+
+@media (max-width: 600px) {
+  .letter-loading-box {
+    padding: 34px 24px;
+    border-radius: 30px;
+  }
+
+  .letter-loading-box h2 {
+    font-size: 26px;
+  }
+
+  .letter-loading-box p {
+    font-size: 14.5px;
+  }
+}

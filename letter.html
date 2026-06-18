@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Secret Letter For You</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Quicksand:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
 
   <style>
     * {
@@ -250,29 +253,36 @@
     }
 
     .floating-heart {
-      position: fixed;
-      color: rgba(255, 170, 190, 0.65);
-      font-size: 18px;
-      animation: floatUp 5s linear forwards;
-      pointer-events: none;
-      z-index: 1;
-    }
+  position: fixed;
+  color: rgba(255, 170, 190, 0.72);
+  font-size: 18px;
+  animation: floatUp linear forwards;
+  pointer-events: none;
+  z-index: 999;
+  text-shadow:
+    0 0 12px rgba(255, 90, 130, 0.45),
+    0 0 24px rgba(255, 190, 205, 0.22);
+}
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(0.8);
-        opacity: 0;
-      }
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(0.75) rotate(0deg);
+    opacity: 0;
+  }
 
-      15% {
-        opacity: 1;
-      }
+  15% {
+    opacity: 1;
+  }
 
-      100% {
-        transform: translateY(-120vh) scale(1.4);
-        opacity: 0;
-      }
-    }
+  70% {
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translateY(-120vh) scale(1.45) rotate(18deg);
+    opacity: 0;
+  }
+}
 
     @media (max-width: 600px) {
       body {
@@ -302,122 +312,217 @@
         font-size: 21px;
       }
     }
+
     /* ===== TỐI ƯU LETTER.HTML TRÊN ĐIỆN THOẠI ===== */
+    @media (max-width: 600px) {
+      body {
+        padding: 18px 10px;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .letter-wrapper {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .back-btn {
+        font-size: 13px;
+        padding: 10px 14px;
+        margin-bottom: 16px;
+      }
+
+      .letter-card {
+        width: 100%;
+        padding: 28px 20px;
+        border-radius: 28px;
+        box-shadow:
+          0 20px 55px rgba(0, 0, 0, 0.48),
+          0 0 30px rgba(190, 20, 55, 0.18),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      }
+
+      .letter-card::before {
+        width: 180px;
+        height: 180px;
+        top: -80px;
+        right: -80px;
+      }
+
+      .letter-card::after {
+        font-size: 54px;
+        right: 22px;
+        top: 22px;
+      }
+
+      .label {
+        font-size: 10.5px;
+        letter-spacing: 2.2px;
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        font-size: 34px;
+        line-height: 1.12;
+        margin-bottom: 12px;
+      }
+
+      .subtitle {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+
+      .divider {
+        width: 110px;
+        margin-bottom: 24px;
+      }
+
+      .letter-content {
+        font-size: 15.5px;
+        line-height: 1.9;
+        text-align: justify;
+        text-align-last: left;
+      }
+
+      .letter-content p {
+        margin-bottom: 18px;
+      }
+
+      .letter-content .dear {
+        font-size: 22px;
+        line-height: 1.4;
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      .quote {
+        margin: 24px 0;
+        padding: 18px 18px;
+        border-left: 3px solid #d7194a;
+        border-radius: 0 18px 18px 0;
+        font-size: 18px;
+        line-height: 1.75;
+        text-align: left;
+      }
+
+      .signature {
+        margin-top: 28px;
+        font-size: 22px;
+        line-height: 1.6;
+        text-align: right;
+      }
+
+      .music-btn {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 26px;
+        padding: 15px 18px;
+        font-size: 15px;
+        line-height: 1.4;
+      }
+
+      .small-note {
+        margin-top: 22px;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+    }
+    .real-letter {
+  display: block;
+}
+
+.real-letter > * {
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(4px);
+}
+
+.real-letter > *.show-line {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition:
+    opacity 0.75s ease,
+    transform 0.75s ease,
+    filter 0.75s ease;
+}
+
+.letter-content {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 17px;
+  line-height: 2;
+  color: #fff1f3;
+  text-align: justify;
+  text-align-last: left;
+  letter-spacing: 0.1px;
+}
+
+.letter-content p {
+  margin-bottom: 20px;
+}
+
+.letter-content .dear {
+  font-family: 'Playfair Display', serif;
+  font-size: 25px;
+  color: #ffd7df;
+  text-align: left;
+  text-align-last: left;
+  margin-bottom: 24px;
+}
+
+.highlight {
+  color: #ff9caf;
+  font-weight: 800;
+  text-shadow: 0 0 12px rgba(255, 80, 120, 0.35);
+}
+
+.quote {
+  margin: 28px 0;
+  padding: 22px;
+  border-left: 3px solid #d7194a;
+  background: rgba(255, 255, 255, 0.055);
+  border-radius: 0 22px 22px 0;
+  color: #ffd8df;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  line-height: 1.7;
+  text-align: left;
+}
+
+.signature {
+  margin-top: 34px;
+  text-align: right;
+  text-align-last: right;
+  color: #ffd7df;
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  line-height: 1.6;
+}
+
 @media (max-width: 600px) {
-  body {
-    padding: 18px 10px;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  .letter-wrapper {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-  }
-
-  .back-btn {
-    font-size: 13px;
-    padding: 10px 14px;
-    margin-bottom: 16px;
-  }
-
-  .letter-card {
-    width: 100%;
-    padding: 28px 20px;
-    border-radius: 28px;
-    box-shadow:
-      0 20px 55px rgba(0, 0, 0, 0.48),
-      0 0 30px rgba(190, 20, 55, 0.18),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-  }
-
-  .letter-card::before {
-    width: 180px;
-    height: 180px;
-    top: -80px;
-    right: -80px;
-  }
-
-  .letter-card::after {
-    font-size: 54px;
-    right: 22px;
-    top: 22px;
-  }
-
-  .label {
-    font-size: 10.5px;
-    letter-spacing: 2.2px;
-    margin-bottom: 10px;
-  }
-
-  h1 {
-    font-size: 34px;
-    line-height: 1.12;
-    margin-bottom: 12px;
-  }
-
-  .subtitle {
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 24px;
-  }
-
-  .divider {
-    width: 110px;
-    margin-bottom: 24px;
-  }
-
   .letter-content {
     font-size: 15.5px;
     line-height: 1.9;
-    text-align: justify;
+    text-align: left;
     text-align-last: left;
-  }
-
-  .letter-content p {
-    margin-bottom: 18px;
   }
 
   .letter-content .dear {
     font-size: 22px;
-    line-height: 1.4;
-    margin-bottom: 20px;
-    text-align: left;
   }
 
   .quote {
-    margin: 24px 0;
-    padding: 18px 18px;
-    border-left: 3px solid #d7194a;
-    border-radius: 0 18px 18px 0;
     font-size: 18px;
     line-height: 1.75;
-    text-align: left;
   }
 
   .signature {
-    margin-top: 28px;
-    font-size: 22px;
-    line-height: 1.6;
-    text-align: right;
-  }
-
-  .music-btn {
-    width: 100%;
-    max-width: 100%;
-    margin-top: 26px;
-    padding: 15px 18px;
-    font-size: 15px;
-    line-height: 1.4;
-  }
-
-  .small-note {
-    margin-top: 22px;
-    font-size: 13px;
-    line-height: 1.6;
+    font-size: 21px;
   }
 }
+
   </style>
 </head>
 
@@ -437,102 +542,132 @@
       <div class="divider"></div>
 
       <div class="letter-content">
-        <p class="dear">Gửi anh Nguyễn Thái Hiển, yêu dấu của em,</p>
 
-        <p>
-          Hôm nay ngày <span class="highlight">  20/6/2026 </span> một ngày rất đặc biệt đối với anh và cả em
+        <div id="realLetter" class="real-letter">
+          <p class="dear">Gửi anh Nguyễn Thái Hiển, yêu dấu của em,</p>
+
+          <p>
+            Hôm nay ngày <span class="highlight"> 20/6/2026 </span> một ngày rất đặc biệt đối với anh và cả em
             nên em muốn dành riêng một góc nhỏ
-          để viết cho anh vài điều mà bình thường có thể em sẽ không nói ra hết được.
-        </p>
+            để viết cho anh vài điều mà bình thường có thể em sẽ không nói ra hết được.
+          </p>
 
-        <p>
-        Đầu tiên, em muốn gửi lời cảm ơn đến ba mẹ anh vì đã sinh ra anh trên đời.
-        Người đã nuôi dạy một Thái Hiển lễ phép, giỏi giang, chịu khó. Và cớ duyên ông trời lại cho hai đứa mình gặp đc nhau trên hành trình dài này.
-          Em mong rằng ngày hôm nay sẽ là một ngày đáng nhớ đối với anh tuy rằng em chỉ chuẩn bị nó 
-          trong thời gian ngắn và em nghĩ là sẽ không được chỉn chu cho lắm nhưng
-          em mong rằng anh sẽ thích và sẽ đón nhận nó.
-          Em mong rằng qua buổi tối ngày hôm nay anh sẽ hiểu được rằng
-          <span class="highlight">anh luôn là người đặc biệt nhất trong lòng em.</span>
-        </p>
+          <p>
+            Đầu tiên, em muốn gửi lời cảm ơn đến ba mẹ anh vì đã sinh ra anh trên đời.
+            Người đã nuôi dạy một Thái Hiển lễ phép, giỏi giang, chịu khó. Và cớ duyên ông trời lại cho hai đứa mình gặp
+            đc nhau trên hành trình dài này.
+            Em mong rằng ngày hôm nay sẽ là một ngày đáng nhớ đối với anh tuy rằng em chỉ chuẩn bị nó
+            trong thời gian ngắn và em nghĩ là sẽ không được chỉn chu cho lắm nhưng
+            em mong rằng anh sẽ thích và sẽ đón nhận nó.
+            Em mong rằng qua buổi tối ngày hôm nay anh sẽ hiểu được rằng
+            <span class="highlight">anh luôn là người đặc biệt nhất trong lòng em.</span>
+          </p>
 
-        <p>
-          Cảm ơn anh vì đã xuất hiện trong cuộc sống của em, khiến cho bầu trời đêm cũng trở nên nhiều sao hơn bình thường.
-          Tuy rằng đôi lúc mình cũng có nhiều phần chưa hiểu nhau, mình còn hay cãi vã, bất đồng, mâu thuẫn
-          nhưng sau những lần đó hai mình đều cố gắng ngồi lại cùng nhau giải quyết vấn đề và
-          không ai bỏ rơi ai cả. Em rất biết ơn điều đó và em mong rằng sau này dù chúng ta có như thế nào đi 
-          chăng nữa thì cũng sẽ không vì những chuyện nhỏ nhặt mà bỏ rơi nhau.
-          <span class="highlight">Hãy cùng em nhớ lại những tháng ngày đầu tiên, khi mà chúng
-            ta bắt đầu câu chuyện tình yêu này anh nhé!</span>
-          
-        </p>
+          <p>
+            Cảm ơn anh vì đã xuất hiện trong cuộc sống của em, khiến cho bầu trời đêm cũng trở nên nhiều sao hơn bình
+            thường.
+            Tuy rằng đôi lúc mình cũng có nhiều phần chưa hiểu nhau, mình còn hay cãi vã, bất đồng, mâu thuẫn
+            nhưng sau những lần đó hai mình đều cố gắng ngồi lại cùng nhau giải quyết vấn đề và
+            không ai bỏ rơi ai cả. Em rất biết ơn điều đó và em mong rằng sau này dù chúng ta có như thế nào đi
+            chăng nữa thì cũng sẽ không vì những chuyện nhỏ nhặt mà bỏ rơi nhau.
+            <span class="highlight">Hãy cùng em nhớ lại những tháng ngày đầu tiên, khi mà chúng
+              ta bắt đầu câu chuyện tình yêu này anh nhé!</span>
 
-        <div class="quote">
-          “Em muốn anh được hạnh phúc, luôn muốn nhìn thấy anh nở nụ cười trên môi,
-          muốn anh tự do được là chính mình và yêu thương chính bản thân mình hơn nữa”
+          </p>
+
+          <div class="quote">
+            “Em muốn anh được hạnh phúc, luôn muốn nhìn thấy anh nở nụ cười trên môi,
+            muốn anh tự do được là chính mình và yêu thương chính bản thân mình hơn nữa”
+          </div>
+
+          <p>
+            Vậy là yêu của em năm nay đã tròn 20 tuổi rồi, chúc anh sẽ luôn thành công trên con đường mà anh chọn
+            và em mong rằng mình có thể giúp đỡ được chút gì cho anh. Bởi dù anh có làm gì đi chăng nữa
+            thì em cũng sẽ 100% ủng hộ anh hết mình. Mong anh quan tâm sức khỏe của anh nhiều hơn nữa vì đó
+            là tài sản chung!! Lắm lúc đi chơi nhìn anh gật gù, lờ đờ vì thiếu ngủ em xót lắm chứ bộ nên
+            anh thương em thì anh phải thương cả bản thân mình nghe hôn.
+            Anh không được tự ti về bản thân mình vì anh đang rất cố gắng nổ lực từng ngày
+            anh rất giỏi và có tiềm năng nên sau này em tin rằng anh sẽ làm được những điều phi thường
+            sẽ gặt hái được những vinh quang đang chờ đợi anh đó!!! Hmm em không giỏi viết văn lắm nhỉ
+            hihi tại đọc lại em thấy cứ lủng củng kiểu gì nhưng mà đó là những tâm tình mà em muốn
+            gửi đến cho anh mong rằng anh hiểu được em yêu anh đến nhường nào.
+
+          </p>
+
+          <p>
+            Em không biết sau này sẽ có bao nhiêu ngày sinh nhật nữa mình được ở cạnh nhau,
+            nhưng hôm nay, ngay lúc này, em thật sự muốn anh biết rằng:<span class="highlight">
+              Em thương anh nhiều lắm thương anh nhiều hơn bản thân mình nữa,
+              em trân trọng anh hơn bất cứ thứ gì trên đời này và em
+               muốn dành cho anh những điều tốt đẹp nhất vì anh xứng đáng
+              có được nó.</span>
+
+          </p>
+
+          <p>
+            Vậy nên hôm nay và nhiều ngày sau đó nữa em mong anh vẫn mãi yêu em như cách em yêu anh vậy,
+            hai đứa mình cùng nhau cố gắng nắm tay nhau thật lâu nhá. Hứa với em là anh phải thật hạnh phúc nhá
+            dù có nhưu thế nào đi nữa cũng phải kể cho nhau nghe những câu chuyện vui, buồn, thường nhật 
+            nhất của nhau anh nhé. Em sẵn sàng lắng nghe anh cả đời này ♡
+
+          </p>
+
+          <div class="signature">
+            Thương yêu anh rất nhiều,<br>
+            Trịnh Nữ Thiện Kiều - Em bé của anh ♡
+          </div>
         </div>
 
-        <p>
-          Vậy là yêu của em năm nay đã tròn 20 tuổi rồi, chúc anh sẽ luôn thành công trên con đường mà anh chọn
-          và em mong rằng mình có thể giúp đỡ được chút gì cho anh. Bởi dù anh có làm gì đi chăng nữa
-          thì em cũng sẽ 100% ủng hộ anh hết mình. Mong anh quan tâm sức khỏe của anh nhiều hơn nữa vì đó
-          là tài sản chung!! Lắm lúc đi chơi nhìn anh gật gù, lờ đờ vì thiếu ngủ em xót lắm chứ bộ nên 
-          anh thương em thì anh phải thương cả bản thân mình nghe hôn.
-          Anh không được tự ti về bản thân mình vì anh đang rất cố gắng nổ lực từng ngày
-          anh rất giỏi và có tiềm năng nên sau này em tin rằng anh sẽ làm được những điều phi thường
-          sẽ gặt hái được những vinh quang đang chờ đợi anh đó!!! Hmm em không giỏi viết văn lắm nhỉ
-          hihi tại đọc lại em thấy cứ lũng cũng kiểu gì nhưng mà đó là những tâm tình mà em muốn
-          gửi đến cho anh mong rằng anh hiểu được em yêu anh đến nhường nào.
-    
-        </p>
-
-        <p>
-          Em không biết sau này sẽ có bao nhiêu ngày sinh nhật nữa mình được ở cạnh nhau,
-          nhưng hôm nay, ngay lúc này, em thật sự muốn anh biết rằng:<span class="highlight">
-          em trân trọng anh, thương anh, và muốn dành cho anh những điều tốt đẹp nhất vì anh xứng đáng 
-          có được mọi thứ trên đời này.</span>
-        
-        </p>
-
-        <p>
-          Vậy nên hôm nay anh chỉ cần là chính anh thui, còn mọi thứ để em lo ạ.
-        </p>
-
-        <div class="signature">
-          Thương yêu anh rất nhiều,<br>
-          Trịnh Nữ Thiện Kiều - Em bé của anh ♡
+        <div class="small-note">
+          P/s: Thứ tình cảm này em dành duy nhất chỉ riêng anh.
         </div>
-      </div>
-
-      <button class="music-btn" onclick="createHearts()">
-        Tình yêu của em ở đây.
-      </button>
-
-      <div class="small-note">
-        P/s: Thứ tình cảm này em dành duy nhất chỉ riêng anh.
       </div>
     </div>
-  </div>
 
-  <script>
-    function createHearts() {
-      for (let i = 0; i < 18; i++) {
+<script>
+  function createHearts() {
+    for (let i = 0; i < 18; i++) {
+      setTimeout(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("floating-heart");
+
+        const symbols = ["♡", "♥", "✦", "❦"];
+        heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.bottom = "-30px";
+        heart.style.fontSize = Math.random() * 16 + 16 + "px";
+        heart.style.animationDuration = Math.random() * 2 + 4 + "s";
+
+        document.body.appendChild(heart);
+
         setTimeout(() => {
-          const heart = document.createElement("div");
-          heart.classList.add("floating-heart");
-          heart.innerHTML = Math.random() > 0.5 ? "♡" : "♥";
-
-          heart.style.left = Math.random() * 100 + "vw";
-          heart.style.bottom = "-20px";
-          heart.style.fontSize = Math.random() * 16 + 16 + "px";
-
-          document.body.appendChild(heart);
-
-          setTimeout(() => {
-            heart.remove();
-          }, 5000);
-        }, i * 120);
-      }
+          heart.remove();
+        }, 7000);
+      }, i * 120);
     }
-  </script>
+  }
+
+  function autoHeartEffect() {
+    for (let round = 0; round < 5; round++) {
+      setTimeout(() => {
+        createHearts();
+      }, round * 2000);
+    }
+  }
+
+  window.addEventListener("load", function () {
+    autoHeartEffect();
+
+    const letterItems = document.querySelectorAll("#realLetter > *");
+
+    letterItems.forEach((item, index) => {
+      setTimeout(() => {
+        item.classList.add("show-line");
+      }, index * 650);
+    });
+  });
+</script>
 </body>
+
 </html>

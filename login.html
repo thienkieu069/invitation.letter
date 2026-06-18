@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Secret Password</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Quicksand:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Quicksand:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <style>
     * {
@@ -160,10 +163,140 @@
         font-size: 15px;
       }
     }
+
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top left, #ffe3ec, transparent 35%),
+        radial-gradient(circle at bottom right, #eeb7c8, transparent 35%),
+        linear-gradient(135deg, #fff8fa, #f7d4df, #fff4f7);
+    }
+
+    .loading-box {
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      background: rgba(255, 250, 250, 0.94);
+      border: 1.5px solid rgba(190, 112, 132, 0.35);
+      border-radius: 34px;
+      padding: 36px 28px;
+      box-shadow: 0 28px 70px rgba(150, 78, 96, 0.25);
+    }
+
+    .loading-heart {
+      font-size: 58px;
+      color: #b85670;
+      animation: heartbeat 1.2s infinite;
+    }
+
+    .loading-box h2 {
+      font-family: 'Playfair Display', serif;
+      color: #7b3345;
+      font-size: 30px;
+      margin: 10px 0;
+    }
+
+    .loading-box p {
+      color: #9b5a68;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .loading-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .loading-dots span {
+      width: 10px;
+      height: 10px;
+      background: #c86f8a;
+      border-radius: 50%;
+      animation: dot 1s infinite alternate;
+    }
+
+    .loading-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .loading-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes heartbeat {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.18);
+      }
+    }
+
+    @keyframes dot {
+      from {
+        opacity: 0.35;
+        transform: translateY(0);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(-8px);
+      }
+    }
+
+    .error.shake {
+      animation: shakeError 0.32s ease;
+    }
+
+    @keyframes shakeError {
+      0% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-6px);
+      }
+
+      50% {
+        transform: translateX(6px);
+      }
+
+      75% {
+        transform: translateX(-4px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
   </style>
 </head>
 
 <body>
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-box">
+      <div class="loading-heart">♡</div>
+      <h2>Đang mở thiệp...</h2>
+      <p>Một chiếc bất ngờ nhỏ xinh đang được chuẩn bị riêng cho anh.</p>
+
+      <div class="loading-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
   <div class="login-card">
     <div class="label">Thư mời bí mật</div>
 
@@ -174,42 +307,65 @@
       Anh có một cuộc hẹn bí mật ngày hôm nay vui lòng nhập pass để được bật mí!
     </p>
 
-    <input 
-      type="password" 
-      id="passwordInput" 
-      class="password-input"
-      placeholder="Nhập mật khẩu ở đây"
-      onkeydown="handleEnter(event)"
-    >
+    <input type="password" id="passwordInput" class="password-input" placeholder="Nhập mật khẩu ở đây"
+      onkeydown="handleEnter(event)">
 
     <button class="open-btn" onclick="checkPassword()">
       Mở thiệp ♡
     </button>
-    
+
 
     <div class="error" id="errorText">
-      Error sai bét ròi, vui lòng nhập lại hahaha ♡
+      Error gần đúng ròi đó cố lên nì, vui lòng nhập lại hahaha ♡
     </div>
 
     <div class="hint">
       Gợi ý nhỏ: pass là một ngày đặc biệt của tụi mình.
-    </div>  
-   
+    </div>
+
   </div>
-
-
   <script>
     const correctPassword = "290126";
+
+    const wrongNotes = [
+      "Error gần đúng ròi đó cố lên nì, vui lòng nhập lại hahaha ♡",
+      "Ủa không phải mã này đâu nha, thử lại lần nữa đi nè.",
+      "Đúng chưa ta sao nó chưa mở nhủy.",
+      "Gần đúng ròi đó ráng lên đi iu oi.",
+      "Vừng ơi mở ra hahaha.",
+      "Sai lần này nữa là tui đi về á nha♡",
+      "Anh iu nhập lại đi, bí mật chưa chịu mở cửa đâu.",
+      "Mật khẩu đang trốn anh rồi, thử thêm lần nữa nha.",
+      "Chưa đúng đâu, nhưng mà cố lên sắp mở được rồi đó.",
+      "Sai nữa là em dỗi nhẹ đó nha hahaha ♡"
+    ];
+
+    let wrongCount = 0;
 
     function checkPassword() {
       const input = document.getElementById("passwordInput");
       const errorText = document.getElementById("errorText");
+      const loadingScreen = document.getElementById("loadingScreen");
 
-      if (input.value === correctPassword) {
+      if (input.value.trim() === correctPassword) {
         localStorage.setItem("dateInviteUnlocked", "true");
-        window.location.href = "index.html";
+
+        loadingScreen.style.display = "flex";
+
+        setTimeout(function () {
+          window.location.href = "index.html";
+        }, 3000);
       } else {
         errorText.style.display = "block";
+
+        errorText.innerHTML = wrongNotes[wrongCount % wrongNotes.length];
+
+        errorText.classList.remove("shake");
+        void errorText.offsetWidth;
+        errorText.classList.add("shake");
+
+        wrongCount++;
+
         input.value = "";
         input.focus();
       }
@@ -222,4 +378,5 @@
     }
   </script>
 </body>
+
 </html>

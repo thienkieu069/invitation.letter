@@ -1,53 +1,45 @@
 const correctPassword = "290126";
 
-function checkPassword() {
-  const input = document.getElementById("passwordInput");
-  const errorText = document.getElementById("errorText");
+  function checkPassword() {
+    const input = document.getElementById("passwordInput");
+    const errorText = document.getElementById("errorText");
+    const loadingScreen = document.getElementById("loadingScreen");
 
-  if (input.value === correctPassword) {
-    localStorage.setItem("dateInviteUnlocked", "true");
+    if (input.value === correctPassword) {
+      localStorage.setItem("dateInviteUnlocked", "true");
 
-    if (window.parent && window.parent.goToPage) {
-      window.parent.goToPage("index.html");
+      loadingScreen.style.display = "flex";
+
+      setTimeout(function () {
+        window.location.href = "index.html";
+      }, 3000);
     } else {
-      window.location.href = "index.html";
+      errorText.style.display = "block";
+      input.value = "";
+      input.focus();
     }
-  } else {
-    errorText.style.display = "block";
-    input.value = "";
-    input.focus();
   }
-}
 
-function handleEnter(event) {
-  if (event.key === "Enter") {
-    checkPassword();
+  function handleEnter(event) {
+    if (event.key === "Enter") {
+      checkPassword();
+    }
   }
-}
-
-function handleEnter(event) {
-  if (event.key === "Enter") {
-    checkPassword();
-  }
-}
-
 
 function openSecretLetter() {
   const now = new Date();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-  const unlockHour = 23;
-  const unlockMinute = 0;
-  const unlockMinutes = unlockHour * 60 + unlockMinute;
-
+  const unlockMinutes = 23 * 60;
   const letterLockBox = document.getElementById("letterLockBox");
+  const letterLoadingScreen = document.getElementById("letterLoadingScreen");
 
   if (currentMinutes >= unlockMinutes) {
-    if (window.parent && window.parent.goToPage) {
-      window.parent.goToPage("letter.html");
-    } else {
+    letterLoadingScreen.style.display = "flex";
+
+    setTimeout(function () {
       window.location.href = "letter.html";
-    }
+    }, 3000);
   } else {
     letterLockBox.style.display = "block";
 
@@ -59,12 +51,36 @@ function openSecretLetter() {
 }
 
 function openDecodeGame() {
-  if (window.parent && window.parent.goToPage) {
-    window.parent.goToPage("decode.html");
-  } else {
     window.location.href = "decode.html";
   }
+
+function openSecretLetter() {
+  const now = new Date();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+  const unlockMinutes = 23 * 60;
+  const letterLockBox = document.getElementById("letterLockBox");
+  const letterLoadingScreen = document.getElementById("letterLoadingScreen");
+
+  if (currentMinutes >= unlockMinutes) {
+    letterLoadingScreen.style.display = "flex";
+
+    setTimeout(function () {
+      window.location.href = "letter.html";
+    }, 3000);
+  } else {
+    letterLockBox.style.display = "block";
+
+    letterLockBox.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  }
 }
+  function lockInvite() {
+    localStorage.removeItem("dateInviteUnlocked");
+    window.location.href = "login.html";
+  }
 
 function lockInvite() {
   localStorage.removeItem("dateInviteUnlocked");
@@ -76,18 +92,4 @@ function lockInvite() {
   }
 }
 
-function lockInvite() {
-  localStorage.removeItem("dateInviteUnlocked");
-  window.location.href = "login.html";
-}
-
-function openDecodeGame() {
-  window.location.href = "decode.html";
-}
-
-
-function lockInvite() {
-  localStorage.removeItem("dateInviteUnlocked");
-  window.location.href = "login.html";
-}
 

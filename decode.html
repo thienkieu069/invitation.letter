@@ -342,6 +342,31 @@
                 padding: 9px 14px;
             }
         }
+        .confetti-piece {
+    position: fixed;
+    top: -30px;
+    z-index: 9999;
+    color: #c86f8a;
+    pointer-events: none;
+    animation: fallConfetti linear forwards;
+    text-shadow: 0 4px 12px rgba(154, 68, 88, 0.25);
+}
+
+@keyframes fallConfetti {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
     </style>
 </head>
 
@@ -424,67 +449,131 @@
             },
 
             D: {
-                name: "D là Diary",
-                shortName: "Diary",
+                name: "D là Darling",
+                shortName: "Darling",
                 hasTimeLock: false,
-                meaning: "D là Diary — đây chính là bức thư bí mật em dành cho anh hehe ♡ Là nơi em gửi những lời dịu dàng nhất, những điều em muốn anh đọc thật chậm và giữ lại cho riêng mình."
+                meaning: "D là Darling - tada chính là em nè món quà nhỏ của anh hehe=)))"
             }
         };
-        function decodeGift(letter) {
+         let countdownTimer = null;
+
+    function decodeGift(letter) {
+        const now = new Date();
+        const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+        const gift = giftData[letter];
+
+        if (!gift.hasTimeLock) {
+            showUnlockedGift(letter, gift);
+            return;
+        }
+
+        const unlockMinutes = gift.unlockHour * 60 + gift.unlockMinute;
+
+        if (currentMinutes >= unlockMinutes) {
+            showUnlockedGift(letter, gift);
+        } else {
+            showLockedGift(letter, gift);
+        }
+    }
+
+    function showUnlockedGift(letter, gift) {
+        clearInterval(countdownTimer);
+
+        const resultTitle = document.getElementById("resultTitle");
+        const resultText = document.getElementById("resultText");
+
+        resultTitle.innerHTML = gift.name + " ♡";
+        resultText.innerHTML = gift.meaning;
+
+        const button = document.querySelector('.letter-btn[data-letter="' + letter + '"]');
+
+        if (button) {
+            button.classList.add("unlocked");
+
+            const smallText = button.querySelector("small");
+            smallText.innerHTML = gift.shortName;
+        }
+
+        createConfetti();
+    }
+
+    function showLockedGift(letter, gift) {
+        clearInterval(countdownTimer);
+
+        const resultTitle = document.getElementById("resultTitle");
+        const resultText = document.getElementById("resultText");
+
+        resultTitle.innerHTML = "Chưa tới giờ mở khóa chữ " + letter + " rồi anh ơi";
+
+        function updateCountdown() {
             const now = new Date();
-            const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-            const gift = giftData[letter];
+            const unlockTime = new Date();
+            unlockTime.setHours(gift.unlockHour, gift.unlockMinute, 0, 0);
 
-            const resultTitle = document.getElementById("resultTitle");
-            const resultText = document.getElementById("resultText");
+            const diff = unlockTime - now;
 
-            if (!gift.hasTimeLock) {
+            if (diff <= 0) {
+                clearInterval(countdownTimer);
                 showUnlockedGift(letter, gift);
                 return;
             }
 
-            const unlockMinutes = gift.unlockHour * 60 + gift.unlockMinute;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-            if (currentMinutes >= unlockMinutes) {
-                showUnlockedGift(letter, gift);
-            } else {
-                const timeText = formatUnlockTime(gift.unlockHour, gift.unlockMinute);
-
-                resultTitle.innerHTML = "Ôy không chữ " + letter + " chạy mất tiêu rồi";
-                resultText.innerHTML =
-                    gift.lockedMessage +
-                    '<br><span class="time-note">Thời gian mở khóa: ' + timeText + '</span>';
-            }
+            resultText.innerHTML =
+                gift.lockedMessage +
+                '<br><span class="time-note">Còn lại: ' + formatCountdown(hours, minutes, seconds) + '</span>';
         }
 
-        function showUnlockedGift(letter, gift) {
-            const resultTitle = document.getElementById("resultTitle");
-            const resultText = document.getElementById("resultText");
+        updateCountdown();
+        countdownTimer = setInterval(updateCountdown, 1000);
+    }
 
-            resultTitle.innerHTML = gift.name + " ♡";
-            resultText.innerHTML = gift.meaning;
+    function formatUnlockTime(hour, minute) {
+        const h = hour.toString().padStart(2, "0");
+        const m = minute.toString().padStart(2, "0");
 
-            const button = document.querySelector('.letter-btn[data-letter="' + letter + '"]');
+        return h + ":" + m;
+    }
 
-            if (button) {
-                button.classList.add("unlocked");
+    function formatCountdown(hours, minutes, seconds) {
+        const h = hours.toString().padStart(2, "0");
+        const m = minutes.toString().padStart(2, "0");
+        const s = seconds.toString().padStart(2, "0");
 
-                const smallText = button.querySelector("small");
-                smallText.innerHTML = gift.shortName;
-            }
+        return h + " giờ " + m + " phút " + s + " giây";
+    }
+
+    function createConfetti() {
+        for (let i = 0; i < 34; i++) {
+            setTimeout(() => {
+                const piece = document.createElement("div");
+                piece.classList.add("confetti-piece");
+
+                const symbols = ["♡", "♥", "✿", "✦"];
+                piece.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+
+                piece.style.left = Math.random() * 100 + "vw";
+                piece.style.fontSize = Math.random() * 14 + 16 + "px";
+                piece.style.animationDuration = Math.random() * 1.8 + 2.8 + "s";
+
+                document.body.appendChild(piece);
+
+                setTimeout(() => {
+                    piece.remove();
+                }, 5000);
+            }, i * 60);
         }
-        function formatUnlockTime(hour, minute) {
-            const h = hour.toString().padStart(2, "0");
-            const m = minute.toString().padStart(2, "0");
+    }
 
-            return h + ":" + m;
-        }
-
-        function lockInvite() {
-            localStorage.removeItem("dateInviteUnlocked");
-            window.location.href = "login.html";
-        }
+    function lockInvite() {
+        localStorage.removeItem("dateInviteUnlocked");
+        window.location.href = "login.html";
+    }
     </script>
 </body>
 
